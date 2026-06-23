@@ -6,10 +6,10 @@ public class Collectible : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Tambah jumlah DataChip
-            GameManager.instance.AddChip();
+            GameManager.instance.AddChip(); // Menambah DataChip
 
-            // Hapus DataChip
+            AudioManager.instance.PlayCollectSound(); // Suara
+
             Destroy(gameObject);
         }
     }
