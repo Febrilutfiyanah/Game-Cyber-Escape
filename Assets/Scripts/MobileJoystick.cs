@@ -6,6 +6,9 @@ public class MobileJoystick : MonoBehaviour
     public FixedJoystick joystick;
     public StarterAssetsInputs starterInput;
 
+    [SerializeField]
+    private float deadZone = 0.1f;
+
     void Update()
     {
         if (joystick == null || starterInput == null)
@@ -14,10 +17,14 @@ public class MobileJoystick : MonoBehaviour
         float h = joystick.Horizontal;
         float v = joystick.Vertical;
 
-        // Hanya kirim input jika joystick digerakkan
-        if (Mathf.Abs(h) > 0.05f || Mathf.Abs(v) > 0.05f)
-        {
-            starterInput.MoveInput(new Vector2(h, v));
-        }
+        // Dead Zone agar joystick yang sedikit bergeser tidak membuat player jalan
+        if (Mathf.Abs(h) < deadZone)
+            h = 0f;
+
+        if (Mathf.Abs(v) < deadZone)
+            v = 0f;
+
+        // Selalu kirim input
+        starterInput.MoveInput(new Vector2(h, v));
     }
 }
